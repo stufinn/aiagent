@@ -23,8 +23,10 @@ def main():
         contents=messages
         )
         print(response.text)
-        print("Prompt tokens:", response.usage_metadata.prompt_token_count)
-        print("Response tokens:", response.usage_metadata.candidates_token_count)
+        if "--verbose" in sys.argv:
+            print("User prompt:", user_prompt)
+            print("Prompt tokens:", response.usage_metadata.prompt_token_count)
+            print("Response tokens:", response.usage_metadata.candidates_token_count)
     else:
         print("Please provide a query")
         sys.exit(1)
