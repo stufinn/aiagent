@@ -1,22 +1,6 @@
 import os
 from google.genai import types
 
-# schema for get_files_info function
-# types.FunctionDeclaration: Defines a function that the model can generate JSON inputs for.
-schema_get_files_info = types.FunctionDeclaration(
-    name="get_files_info",
-    description="List the files in the specified directory, along with their sizex, constrained to the working directory.",
-    parameters=types.Schema(
-        type=types.Type.OBJECT,
-        properties={
-            "directory": types.Schema(
-                type=types.Type.STRING,
-                description="The directory to list files from, relative to the working directory. If not provided, list files in the working directory itself."
-            )
-        }
-    )
-)
-
 def get_files_info(working_directory, directory="."):
 
     abs_working_dir = os.path.abspath(working_directory)
@@ -41,3 +25,20 @@ def get_files_info(working_directory, directory="."):
         return "\n".join(files_info)
     except Exception as e:
         return f"Error listing files: {e}"
+    
+# schema for get_files_info function
+# types.FunctionDeclaration: Defines a function that the model can generate JSON inputs for.
+schema_get_files_info = types.FunctionDeclaration(
+    name="get_files_info",
+    description="List the files in the specified directory, along with their sizes, constrained to the working directory.",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "directory": types.Schema(
+                type=types.Type.STRING,
+                description="The directory to list files from, relative to the working directory. If not provided, list files in the working directory itself."
+            )
+        },
+        required=['directory']
+    )
+)  

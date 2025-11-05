@@ -7,8 +7,6 @@ from google.genai import types
 from call_function import available_functions
 from prompts import system_prompt
 
-
-
 def main():
     load_dotenv()
    
@@ -50,6 +48,7 @@ def generate_content(client, messages, verbose):
     if verbose:
         print("Prompt tokens:", response.usage_metadata.prompt_token_count)
         print("Response tokens:", response.usage_metadata.candidates_token_count)
+        print(response.text)
     
     if not response.function_calls:
         return response.text
